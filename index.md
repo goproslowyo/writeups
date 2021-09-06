@@ -10,6 +10,8 @@
 
 - [Feline](./htb/feline/)
 
+- [Kotarak](./htb/kotarak/)
+
 ## TryHackMe Writeups
 
 - TODO: Add some writeups.
