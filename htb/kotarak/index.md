@@ -21,7 +21,7 @@ toc-own-page: true
 
 ## Overview
 
-*We know nothing of this box. Yet.*
+This was a relatively hard box that involved a lot of enumeration at each part of the box that we reached. There was internal enumeration via RFI and privilege "escalation" into an LXC container that was hosted on the victim machine. "Escaping" into this container was quite tricky but in the process I learned about an awesome binary called "autobind" which a) I couldn't believe I hadn't heard of, and b) I'll now be aware of. Please read on for the gory details!
 
 ## Information Gathering
 
