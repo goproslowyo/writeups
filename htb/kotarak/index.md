@@ -11,7 +11,7 @@ titlepage-text-color: "FFFFFF"
 titlepage-color: "0c0d0e"
 titlepage-rule-color: "8ac53e"
 titlepage-rule-height: 0
-logo: "../../resources/e097e54b9c1149f69913524a6f7b7662.png"
+logo: "./resources/e097e54b9c1149f69913524a6f7b7662.png"
 logo-width: 6in
 toc: true
 toc-own-page: true
@@ -70,15 +70,15 @@ A quick port scan returns `22`, `8009`, `8080`, and `60000`. The only port with 
 
 There's webpage claiming to offer anonymous web browsing but we can't seem to do anything useful with command injection or sql injection. We also tried a bunch of fuzzing for LFI but only get cheeky `try harder` responses.
 
-![Strange Webserver on Port 6000](../../resources/e3ab2421297149e29ec8b6c9c345e0a8.png)
+![Strange Webserver on Port 6000](./resources/e3ab2421297149e29ec8b6c9c345e0a8.png)
 
 Eventually we figured out that the website is vulnerable to RFI by seeing if it would reach out and load a simple `python -m http.server` on our attacker machine -- and it did!
 
-![Look Ma, RFI!](../../resources/5f371abaad9143bc85c454b6443ba0b1.png)
+![Look Ma, RFI!](./resources/5f371abaad9143bc85c454b6443ba0b1.png)
 
 Now that we know we have some RFI let's use that to enumerate things we can't see on the localhost from the outside using `wfuzz` (h/t @RitcheS):
 
-![Using RFI as a Port Scanner with Wfuzz](../../resources/08501545f17348599568e9bed16d01a3.png)
+![Using RFI as a Port Scanner with Wfuzz](./resources/08501545f17348599568e9bed16d01a3.png)
 
 Using the RFI we found earlier we can see what's on each of those ports. Most of them have nothing terribly interesting except `320` and `888`.
 
@@ -86,37 +86,37 @@ Using the RFI we found earlier we can see what's on each of those ports. Most of
 
 We honestly didn't look here because we started enumeration at 888 and kept going down that path.
 
-![WHATS ON PORT 320? LUL REEE - @RitchieS](../../resources/6e6c3d73176146208f5eea5323fa0e77.png)
+![WHATS ON PORT 320? LUL REEE - @RitchieS](./resources/6e6c3d73176146208f5eea5323fa0e77.png)
 
 ### Port 888
 
 Visiting port 888 gives us a directory listing with some interesting sounds files, mainly `backup`. Let's see if we can continue to abuse RFI to see it's contents:
 
-![What do we have here?](../../resources/1b244801c5eb4670a2c355fb0905624c.png)
+![What do we have here?](./resources/1b244801c5eb4670a2c355fb0905624c.png)
 
-![How can we view this?](../../resources/5b36a71390fe457591dc19369b2d6452.png)
+![How can we view this?](./resources/5b36a71390fe457591dc19369b2d6452.png)
 
-![Is this page really blank?](../../resources/761b527b63684fe588415cd18772ca74.png)
+![Is this page really blank?](./resources/761b527b63684fe588415cd18772ca74.png)
 
-![Are you kidding me?! Credentials!](../../resources/68d5c69978614ec5927d5449ea2f7e7d.png)
+![Are you kidding me?! Credentials!](./resources/68d5c69978614ec5927d5449ea2f7e7d.png)
 
 ### Port 8080
 
 Let's go ahead and skip right around to that Apache Tomcat Manager we found earlier now that we've got some credentials.
 
-![I'd like to speak to the manager!](../../resources/b84c14c81e7d466aa2e07bbaed7ae388.png)
+![I'd like to speak to the manager!](./resources/b84c14c81e7d466aa2e07bbaed7ae388.png)
 
 Let's use `msfvenom` to generate a malicios java .war file to upload for a reverse shell.
 
-![The Shell Wars](../../resources/ccb1f76353a24144988768928fa57fec.png)
+![The Shell Wars](./resources/ccb1f76353a24144988768928fa57fec.png)
 
 Let's upload the malicious payload and it for a shell.
 
-![Go](../../resources/0bfcbf15b2dc4fccb0e67210531710d4.png)
+![Go](./resources/0bfcbf15b2dc4fccb0e67210531710d4.png)
 
-![To](../../resources/3c3b691203ed43bf836d1ef27d994596.png)
+![To](./resources/3c3b691203ed43bf836d1ef27d994596.png)
 
-![Shell.war](../../resources/181a93f4ac9c43cc95f3c192d147da81.png)
+![Shell.war](./resources/181a93f4ac9c43cc95f3c192d147da81.png)
 
 Woot, we've got a shell as `tomcat` and we can look around the box further.
 
@@ -144,11 +144,11 @@ sent 28,990,695 bytes  received 168 bytes  2,761,034.57 bytes/sec
 
 Now that we have the backup we can use `impacket-secretsdump` to dump the hashes:
 
-![Give me hashes!](../../resources/0cb1d5f3bb8a41d09c80b23c9970a6b5.png)
+![Give me hashes!](./resources/0cb1d5f3bb8a41d09c80b23c9970a6b5.png)
 
 So we can crack them with `hashcat`:
 
-![Crack them hashes](../../resources/f2d2eb11d75d46f18a7263592f2939d8.png)
+![Crack them hashes](./resources/f2d2eb11d75d46f18a7263592f2939d8.png)
 
 Great, now we have a presumtive password for the `atanas` user.
 
@@ -181,9 +181,9 @@ debugfs /dev/sda1
 
 Unfortunately the example here drops us into the /boot partition and is not particularly useful. Instead let's drop into the root partition. We can find it easily by typing `mount`.
 
-![Where's the root mount?](../../resources/c3678cfa1dba451eb8639c1eb490fc40.png)
+![Where's the root mount?](./resources/c3678cfa1dba451eb8639c1eb490fc40.png)
 
-![Abuse DebugFS to Explore the root Partition](../../resources/97040eefc4f740e8b6a08368cbd4e83e.png)
+![Abuse DebugFS to Explore the root Partition](./resources/97040eefc4f740e8b6a08368cbd4e83e.png)
 
 Even after mounting the root file system it seems our flag is on another castle!
 
@@ -193,7 +193,7 @@ We need to enumerate further. So let's explorer the new files available in `root
 
 There's one file in particular, `app.log`, which seems to hint a something with `wget v1.16`.
 
-![What are you wget'ing at?](../../resources/e5db92bcae964030901bc2a78ac3ab47.png)
+![What are you wget'ing at?](./resources/e5db92bcae964030901bc2a78ac3ab47.png)
 
 ## Final Privilege Escalation
 
@@ -201,13 +201,13 @@ We can see that a "remote machine" (10.0.3.133) (an LXC container running on the
 
 Let's search around for some CVE's to try:
 
-![wget CVE PoC](../../resources/fb03dc82ee9b4f0a8c5b7236b6dc1410.png)
+![wget CVE PoC](./resources/fb03dc82ee9b4f0a8c5b7236b6dc1410.png)
 
 This CVE looks really promising but we ran into a snag early on. The wget command seems to be asking for a server on port 80 but we're not a privileged user and port 80 is a privileged port so we can't launch a webserver.
 
 After a lot of googling, we turned up a command I've actually never heard of before: `authbind`. This magically allows us to bind to a prvileged port as a non-privileged user. `authbind` requires that the system administrator has done some configuration beforehand but thankfully we can see that our sysadmin was very helpful:
 
-![Thanks Mr. Sysadmin](../../resources/d3184841dba24de297a1daefa71e56e1.png)
+![Thanks Mr. Sysadmin](./resources/d3184841dba24de297a1daefa71e56e1.png)
 
 From here it is simply a matter of configuring the PoC script properly and listening on ports 21 and 80 for a connection from the "remote" machine.
 
@@ -228,10 +228,10 @@ authbind python wget_poc.py & >/dev/null
 nc -lvp 32000
 ```
 
-![FTPd Listener](../../resources/79a4b060bfe141f29667aa7697ac6ea9.png)
+![FTPd Listener](./resources/79a4b060bfe141f29667aa7697ac6ea9.png)
 
-![wget Exploit Listener](../../resources/9e0fdca1b28644e99a608434f615b540.png)
+![wget Exploit Listener](./resources/9e0fdca1b28644e99a608434f615b540.png)
 
 Why, hello there root shell! Gimme flag:
 
-![Netcat Listener](../../resources/15398bd72fa4402485a32b959df201df.png)
+![Netcat Listener](./resources/15398bd72fa4402485a32b959df201df.png)
