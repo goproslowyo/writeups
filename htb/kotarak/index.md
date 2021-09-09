@@ -21,7 +21,7 @@ toc-own-page: true
 
 ## Overview
 
-This was a relatively hard box that involved a lot of enumeration at each part of the box that we reached. There was internal enumeration via RFI and privilege "escalation" into an LXC container that was hosted on the victim machine. "Escaping" into this container was quite tricky but in the process I learned about an awesome binary called "autobind" which a) I couldn't believe I hadn't heard of, and b) I'll now be aware of. Please read on for the gory details!
+This was a relatively hard box that involved a lot of enumeration at each part of the box that we reached. There was internal enumeration via SSRF and privilege "escalation" into an LXC container that was hosted on the victim machine. "Escaping" into this container was quite tricky but in the process I learned about an awesome binary called "autobind" which a) I couldn't believe I hadn't heard of, and b) I'll now be aware of. Please read on for the gory details!
 
 ## Information Gathering
 
@@ -72,15 +72,15 @@ There's webpage claiming to offer anonymous web browsing but we can't seem to do
 
 ![Strange Webserver on Port 6000](./resources/e3ab2421297149e29ec8b6c9c345e0a8.png)
 
-Eventually we figured out that the website is vulnerable to RFI by seeing if it would reach out and load a simple `python -m http.server` on our attacker machine -- and it did!
+Eventually we figured out that the website is vulnerable to SSRF by seeing if it would reach out and load a simple `python -m http.server` on our attacker machine -- and it did!
 
-![Look Ma, RFI!](./resources/5f371abaad9143bc85c454b6443ba0b1.png)
+![Look Ma, SSRF!](./resources/5f371abaad9143bc85c454b6443ba0b1.png)
 
-Now that we know we have some RFI let's use that to enumerate things we can't see on the localhost from the outside using `wfuzz` (h/t @RitcheS):
+Now that we know we have some SSRF let's use that to enumerate things we can't see on the localhost from the outside using `wfuzz` (h/t @RitcheS):
 
-![Using RFI as a Port Scanner with Wfuzz](./resources/08501545f17348599568e9bed16d01a3.png)
+![Using SSRF as a Port Scanner with Wfuzz](./resources/08501545f17348599568e9bed16d01a3.png)
 
-Using the RFI we found earlier we can see what's on each of those ports. Most of them have nothing terribly interesting except `320` and `888`.
+Using the SSRF we found earlier we can see what's on each of those ports. Most of them have nothing terribly interesting except `320` and `888`.
 
 ### Port 320
 
@@ -90,7 +90,7 @@ We honestly didn't look here because we started enumeration at 888 and kept goin
 
 ### Port 888
 
-Visiting port 888 gives us a directory listing with some interesting sounds files, mainly `backup`. Let's see if we can continue to abuse RFI to see it's contents:
+Visiting port 888 gives us a directory listing with some interesting sounds files, mainly `backup`. Let's see if we can continue to abuse SSRF to see it's contents:
 
 ![What do we have here?](./resources/1b244801c5eb4670a2c355fb0905624c.png)
 
