@@ -14,6 +14,8 @@
 
 - [Kotarak](./htb/kotarak/)
 
+- [Popcorn](./htb/popcorn/)
+
 ## TryHackMe Writeups
 
 - TODO: Add some writeups.
