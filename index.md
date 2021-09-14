@@ -2,7 +2,9 @@
 
 ## CTF writeups
 
-- Links
+- [ALLES! CTF 2021](https://infosecstreams.github.io/allesctf2021/)
+
+- [CSAW 2021 CTF](https://infosecstreams.github.io/csaw21/)
 
 ## HackTheBox Writeups
 
