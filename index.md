@@ -16,6 +16,8 @@
 
 - [Popcorn](./htb/popcorn/)
 
+- [Beep](./htb/beep/)
+
 ## TryHackMe Writeups
 
 - TODO: Add some writeups.
