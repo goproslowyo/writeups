@@ -6,6 +6,13 @@
 
 - [CSAW 2021 CTF](https://infosecstreams.github.io/csaw21/)
 
+- [Huntress CTF 2023](https://infosecstreams.github.io/huntress2023/)
+
+---
+
+>[!warning]
+> I've moved most of the Hack the Box and TryHackMe writeups to [Notion](https://infosecinfo.notion.site/).
+
 ## HackTheBox Writeups
 
 - [Cronos](./htb/cronos/)
@@ -20,4 +27,4 @@
 
 ## TryHackMe Writeups
 
-- TODO: Add some writeups.
+- See above note.
